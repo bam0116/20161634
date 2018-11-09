@@ -1,5 +1,6 @@
-#pragma once
 #include "TextureManager.h"
+
+TextureManager* TextureManager::s_plnstance = NULL;
 
 bool TextureManager::load(std::string fileName, std::string   id,
 	SDL_Renderer* pRenderer)

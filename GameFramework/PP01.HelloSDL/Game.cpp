@@ -17,9 +17,12 @@ bool Game::init(const char* title, int xpos, int ypos,
 		{
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 		}
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+		if (!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
+		{
+			return false;
+		}
+		SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 
-		m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
 	}
 	else
 	{
@@ -32,8 +35,7 @@ bool Game::init(const char* title, int xpos, int ypos,
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-	m_textureManager.draw("animate", 0, 0, 128, 82, m_pRenderer);
-	m_textureManager.drawFrame("animate", 100, 100, 128, 82, 1, m_currentFrame, m_pRenderer);
+	TheTextureManager::Instance()->drawFrame("animate", 0, 300, 128, 82, 1, m_currentFrame, m_pRenderer);
 	SDL_RenderPresent(m_pRenderer);
 }
 
