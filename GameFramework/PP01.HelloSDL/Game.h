@@ -39,3 +39,5 @@ private:
 	int m_currentFrame;
 	std::vector<GameObject*> m_gameObject;
 };
+
+
