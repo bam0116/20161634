@@ -1,17 +1,21 @@
 #include "InputHandler.h"
-#include "Game.h"
 
 InputHandler* InputHandler::s_pInstance = 0;
 
 InputHandler::InputHandler()
 {
-
+	m_mousePosition = new Vector2D(0, 0);
+	for (int i = 0; i < 3; i++)
+	{
+		m_mouseButtonStates.push_back(false);
+	}
 }
 
 void InputHandler::clean()
 {
 
 }
+
 
 bool InputHandler::isKeyDown(SDL_Scancode key)
 {
@@ -27,24 +31,42 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 	return false;
 }
 
+bool InputHandler::getMouseButtonState(int buttonNumber)
+{
+	return m_mouseButtonStates[buttonNumber];
+}
+
+Vector2D*  InputHandler::getMousePosition()
+{
+	return m_mousePosition;
+}
 
 void InputHandler::update()
 {
-	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_KEYUP)
+		switch (event.type)
 		{
-			m_keystates = SDL_GetKeyboardState(0);
-		}
-
-		if (event.type == SDL_KEYDOWN)
-		{
-			m_keystates = SDL_GetKeyboardState(0);
-		}
-		if (event.type == SDL_QUIT)
-		{
+		case SDL_QUIT:
 			Game::Instance()->quit();
+			break;
+		case SDL_MOUSEMOTION:
+			onMouseMove(event);
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			onMouseButtonDown(event);
+			break;
+		case SDL_MOUSEBUTTONUP:
+			onMouseButtonUp(event);
+			break;
+		case SDL_KEYDOWN:
+			onKeyDown();
+			break;
+		case SDL_KEYUP:
+			onKeyUp();
+			break;
+		default:
+			break;
 		}
 	}
 }

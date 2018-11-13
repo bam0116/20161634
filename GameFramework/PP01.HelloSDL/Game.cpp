@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include <SDL_image.h>
-#include "InputHandler.h"
+
 
 Game::Game() {}
 
@@ -29,7 +29,7 @@ bool Game::init(const char* title, int xpos, int ypos,
 		SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 
 		m_gameObject.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-		m_gameObject.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+		m_gameObject.push_back(new Enemy(new LoaderParams(100, 100, 128, 82, "animate")));
 	}
 	else
 	{
